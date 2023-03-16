@@ -29,3 +29,19 @@ CREATE TABLE reply (
 -- 1, 접근 기능 만들기 1 
 -- 2, 인터페이스란     1
 
+INSERT INTO user(id, user_name, email )
+VALUES(1, "효린", "khl4459@naver.com");
+	 
+     
+INSERT INTO user(id, user_name, email )
+VALUES    
+     (2, "린", "12345@naver.com");
+
+INSERT INTO blog(id, user_id, content)
+VALUES(1, 1, '내용내용') ;
+
+DROP TABLE blog;
+
+SELECT * FROM user;
+SELECT * FROM blog;
+

@@ -8,15 +8,36 @@ use mylibrary;
 CREATE TABLE book(
 	id int PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(20) NOT NULL,
-    author VARCHAR(10) NOT NULL,
-    content TEXT    
+    -- author VARCHAR(10) NOT NULL,
+    content TEXT,
+    authorId int,
+    FOREIGN KEY(authorId) REFERENCES author(id)
+);
+select * from book;
+select * from user;
+select *
+from book
+where author = "김효린";
+-- "김효린" => authorid(동명이인)
+
+select *
+from book
+where userName = 
+(select userName
+from user
+where id = ?);
+
+CREATE TABLE AUTHOR(
+	id int PRIMARY key AUTO_INCREMENT
 );
 
 CREATE TABLE user(
 	id int PRIMARY KEY AUTO_INCREMENT,
     userName VARCHAR(10) NOT NULL,
     password VARCHAR(10) NOT NULL,
-    tel VARCHAR(15) UNIQUE
+    tel VARCHAR(15) UNIQUE,
+    author_id int,
+    FOREIGN KEY(author_id) REFERENCES Author(id)
 );
 
 -- DROP TABLE book;
@@ -41,3 +62,7 @@ SELECT * FROM user;
 SELECT userName
 FROM user
 WHERE userName = '김효린';
+
+SELECT *
+FROM user
+WHERE username = '김효린' and password = '1234';

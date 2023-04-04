@@ -13,19 +13,7 @@ CREATE TABLE book(
     authorId int,
     FOREIGN KEY(authorId) REFERENCES author(id)
 );
-select * from book;
-select * from user;
-select *
-from book
-where author = "김효린";
--- "김효린" => authorid(동명이인)
 
-select *
-from book
-where userName = 
-(select userName
-from user
-where id = ?);
 
 CREATE TABLE AUTHOR(
 	id int PRIMARY key AUTO_INCREMENT

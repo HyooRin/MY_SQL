@@ -1,0 +1,73 @@
+
+-- bulluetin Board (게시판)
+
+-- USER, board, reply
+CREATE TABLE user(
+	id int PRIMARY KEY AUTO_INCREMENT,   
+    userId VARCHAR(10) NOT NULL,
+    email VARCHAR(20) NOT NULL,
+    password VARCHAR(10) NOT NULL,
+    nickName VARCHAR(10) UNIQUE NOT NULL
+);
+
+CREATE TABLE board (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(50) NOT NULL,
+    content TEXT,
+    nickName VARCHAR(10),
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (nickName) REFERENCES user (nickName)
+);
+
+-- 아직 생성안함 
+CREATE TABLE reply (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    replyContent VARCHAR(200),
+    boardId INT NOT NULL,
+    FOREIGN KEY (boardId) REFERENCES board (id)
+);
+
+ DROP TABLE user;
+ DROP TABLE board;
+
+SELECT * FROM user;
+SELECT * FROM board;
+
+
+-- delete from board where id = 3; 
+
+
+INSERT INTO user(userId, email, password, nickName)
+VALUES('khl4459' ,'naver.com','1234' ,'효린스'),
+	  ('joi', 'naver.com', '1234', '주이스');
+      
+INSERT INTO board(title, content, nickName)
+VALUES('자바', '하자하자', '효린스'),
+	  ('주이', '주이주이', '주이스');
+      
+SELECT title, content, nickName, date
+FROM board
+WHERE id = 1;
+
+INSERT INTO board(title, content, nickName)
+VALUES('이겨라', '너 되냐', '효린스'),
+	  ('나 이김 예스', '진짜로 예스', '효린스');
+
+
+
+select * from board where id = 1; 
+
+UPDATE todolist SET description = '이길꺼야' 
+WHERE title = 'dddd' ;
+
+UPDATE board 
+SET title = '됩니다', content = '잘', nickName = '효린스'
+WHERE id = 3;
+
+UPDATE board
+SET nickName = '효린스'
+WHERE id = 5;
+
+SELECT *
+FROM user
+WHERE userId = 'khl4459' AND password = '1234';

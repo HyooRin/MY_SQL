@@ -65,7 +65,7 @@ SELECT c.name, age, address
 FROM customer AS c
 RIGHT JOIN reservation AS r
 ON c.name = r.name
-WHERE age >= ( SELECT age FROM customer WHERE age >= 30) ;
+WHERE age IN( SELECT age FROM customer WHERE age >= 30);
 
 
 

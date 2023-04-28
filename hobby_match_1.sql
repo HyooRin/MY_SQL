@@ -1,6 +1,7 @@
 create database if not exists HOBBIES_SHARE;
 use HOBBIES_SHARE;
-drop table if exists Q_A;
+drop table if exists QUESTION_TB;
+drop table if exists ANSWER_TB;
 drop table if exists MEMBER_MATCH;
 drop table if exists MEMBER_HOBBIES;
 drop table if exists USER_MATCH;
@@ -77,13 +78,48 @@ create table if not exists USER_MATCH(
     foreign key(sub_user) references USER_TB(id) on update cascade on delete cascade
 );
 
-create table if not exists Q_A(
-	id bigint primary key auto_increment,
+create table if not exists QUESTION_TB(
+    id bigint primary key auto_increment,
+    user_id bigint not null,
+    content TEXT not null,
+    proceed tinyint(1) not null default 0,
+    foreign key(user_id) references USER_TB(id) on update cascade on delete cascade
+);
+
+create table if not exists ANSWER_TB(
+    id bigint primary key auto_increment,
     user_id bigint not null,
     content TEXT not null,
     foreign key(user_id) references USER_TB(id) on update cascade on delete cascade
 );
 
+alter table q_a rename question_tb;
 
--- 
+-- DB 추가 
+-- 신고 기능 
+create table if not exists report_board_tb(
+    id bigint primary key auto_increment,
+    report_user_id bigint not null,
+    report_board_id bigint not null,
+    proceed tinyint(1) not null default 0,
+    foreign key(report_user_id) references USER_TB(id) on update cascade on delete cascade,
+    foreign key(report_board_id) references BOARD_TB(id) on update cascade on delete cascade
+);
 
+create table if not exists report_comment_tb(
+    id bigint primary key auto_increment,
+    report_user_id bigint not null,
+    report_comment_id bigint not null,
+    proceed tinyint(1) not null default 0,
+    foreign key(report_user_id) references USER_TB(id) on update cascade on delete cascade,
+    foreign key(report_comment_id) references COMMENT_TB(id) on update cascade on delete cascade
+);
+
+1	14	16:35:06	create table if not exists report_board_tb(
+     id bigint primary key auto_increment,
+     report_user_id bigint not null,
+     report_board_id bigint not null,
+     proceed tinyint(1) not null default 0,
+     foreign key(report_user_id) references USER_TB(id) on update cascade on delete cascade,
+     foreign key(report_board_id) references BOARD_TB(id) on update cascade on delete cascade
+ )	0 row(s) affected, 2 warning(s):

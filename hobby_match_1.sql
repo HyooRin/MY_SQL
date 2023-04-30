@@ -26,9 +26,6 @@ create table if not exists USER_TB(
     created_at timestamp default now()
 );
 
-drop table user_tb;
-delete from user_tb where id = 7;
-select * from user_tb;
 
 -- 취미목록
 create table if not exists HOBBIES(
@@ -70,6 +67,7 @@ create table if not exists USER_HOBBIES(
 );
 
 -- 유저 만남 기록
+
 create table if not exists USER_MATCH(
 	main_user bigint not null,
     sub_user bigint not null,
@@ -93,7 +91,23 @@ create table if not exists ANSWER_TB(
     foreign key(user_id) references USER_TB(id) on update cascade on delete cascade
 );
 
-alter table q_a rename question_tb;
+create table if not exists report_board_tb(
+    id bigint primary key auto_increment,
+    report_user_id bigint not null,
+    report_board_id bigint not null,
+    proceed tinyint(1) not null default 0,
+    foreign key(report_user_id) references USER_TB(id) on update cascade on delete cascade,
+    foreign key(report_board_id) references BOARD_TB(id) on update cascade on delete cascade
+);
+
+create table if not exists report_comment_tb(
+    id bigint primary key auto_increment,
+    report_user_id bigint not null,
+    report_comment_id bigint not null,
+    proceed tinyint(1) not null default 0,
+    foreign key(report_user_id) references USER_TB(id) on update cascade on delete cascade,
+    foreign key(report_comment_id) references COMMENT_TB(id) on update cascade on delete cascade
+);
 
 -- DB 추가 
 -- 신고 기능 
@@ -115,11 +129,12 @@ create table if not exists report_comment_tb(
     foreign key(report_comment_id) references COMMENT_TB(id) on update cascade on delete cascade
 );
 
-1	14	16:35:06	create table if not exists report_board_tb(
-     id bigint primary key auto_increment,
-     report_user_id bigint not null,
-     report_board_id bigint not null,
-     proceed tinyint(1) not null default 0,
-     foreign key(report_user_id) references USER_TB(id) on update cascade on delete cascade,
-     foreign key(report_board_id) references BOARD_TB(id) on update cascade on delete cascade
- )	0 row(s) affected, 2 warning(s):
+CREATE TABLE if not exists message_tb(
+	id bigint primary key auto_increment,
+    sender bigint not null,
+    receiver bigint not null,
+    message  TEXT not null,
+    created_at timestamp default now(),
+    foreign key(sender) references USER_TB(id) on update cascade on delete cascade,
+    foreign key(receiver) references USER_TB(id) on update cascade on delete cascade
+); 

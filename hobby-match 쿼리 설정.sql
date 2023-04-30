@@ -24,6 +24,7 @@ value('영화'),
 
 select * from user_tb;
 select * from hobbies;
+select * from comment_tb;
 
 delete from user_tb;
 
@@ -153,7 +154,7 @@ values(1, 1);
 select * from report_board_tb;
 select * from user_tb;
 select * from report_comment_tb;
-
+SELECT * from comment_tb WHERE id = 1;
 
 create table if not exists report_comment_tb(
     id bigint primary key auto_increment,
@@ -166,4 +167,39 @@ create table if not exists report_comment_tb(
 
 insert into report_comment_tb(report_user_id, report_comment_id)
 values (2, 2);
+
+CREATE TABLE if not exists message_tb(
+	id bigint primary key auto_increment,
+    sender bigint not null,
+    receiver bigint not null,
+    message  TEXT not null,
+    created_at timestamp default now(),
+    foreign key(sender) references USER_TB(id) on update cascade on delete cascade,
+    foreign key(receiver) references USER_TB(id) on update cascade on delete cascade
+); 
+DESC message_tb;
+SELECT * FROM message_tb;
+SELECT * FROM board_tb;
+SELECT * FROM user_tb;
+
+INSERT into message_tb (sender, receiver, message)
+values(1, 2, '안녕하세요');
+
+
+SELECT * from message_tb WHERE receiver = 1;
+-- receiver 기준 - 받은 메세지 목록 
+-- 추가 : sender 의 nickname /  + user_tb
+select m.*, u.nickname
+from message_tb as m
+inner join user_tb as u
+on m.sender = u.id 
+where m.receiver = 2;
+
+-- 보낸 메세지 목록
+-- 추가 : receiver의 nickname + user_tb
+select m.*, u.nickname
+from message_tb as m
+inner join user_tb as u 
+on m.receiver = u.id
+where m.sender = 1;
 		

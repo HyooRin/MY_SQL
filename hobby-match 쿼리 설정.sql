@@ -180,16 +180,19 @@ CREATE TABLE if not exists message_tb(
 DESC message_tb;
 SELECT * FROM message_tb;
 SELECT * FROM board_tb;
+SELECT * FROM hobbies;
 SELECT * FROM user_tb;
 
 INSERT into message_tb (sender, receiver, message)
-values(1, 2, '안녕하세요');
+values(1, 2, '하이하이');
 
+select * from USER_TB;
+desc user_tb;
 
 SELECT * from message_tb WHERE receiver = 1;
 -- receiver 기준 - 받은 메세지 목록 
 -- 추가 : sender 의 nickname /  + user_tb
-select m.*, u.nickname
+select m.*, nickname
 from message_tb as m
 inner join user_tb as u
 on m.sender = u.id 
